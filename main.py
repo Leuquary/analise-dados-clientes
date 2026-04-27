@@ -6,8 +6,6 @@ def main():
     print(tabela_clientes)
     
     tabela_clientes = tabela_clientes.dropna()
-    tabela_clientes["Faixa Salarial Anual"] = tabela_clientes["Faixa Salarial Anual"].str.strip()
-    tabela_clientes["Faixa Salarial Anual"] = tabela_clientes["Faixa Salarial Anual"].str.replace(" - ", "-", regex = False)    
 
     print(tabela_clientes.info())
     print(tabela_clientes.describe().round(1))
@@ -43,24 +41,12 @@ def main():
 
     grafico_pizza.show()
 
-    ordem_salario = [
-        "Less than $40K",
-        "$40K-$60K",
-        "$60K-$80K",
-        "$80K-$120K",
-        "$120K+",
-        "Não informado"
-    ]
-
     grafico_barras_horizontais = px.histogram(
         tabela_clientes, 
         x = "Limite Consumido",
         y = "Faixa Salarial Anual",
         color = "Categoria",
         barmode = "group",
-        category_orders = {
-            "Faixa Salarial Anual": ordem_salario
-        },
         color_discrete_map = {
             "Cliente": "green",
             "Cancelado": "red"
@@ -68,7 +54,7 @@ def main():
     )
 
     grafico_barras_horizontais.update_layout(
-        title = "Relação entre Limite Consumido e Faixa Salarial Anual por categoria de cliente (cliente ativo / cliente cancelado)", 
+        title = "Relação entre Limite Consumido e Faixa Salarial Anual por categoria de Cliente (cliente ativo / cliente cancelado)", 
         xaxis_title = "Limite Consumido", 
         yaxis_title = "Faixa Salarial Anual"
     )
